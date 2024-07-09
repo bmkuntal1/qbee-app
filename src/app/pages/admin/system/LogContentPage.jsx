@@ -5,7 +5,7 @@ import {useQuery} from '@tanstack/react-query';
 import PageTitle from './../../../components/page/PageTitle';
 
 const getLogContent = async (date) => {
-    const response = await httpClient.get(`/application/logs/${date}`);
+    const response = await httpClient.get(`/logs/${date}`);
     return response.data;
 }
 

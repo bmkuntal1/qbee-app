@@ -67,7 +67,7 @@ const EditUserProfilePage = () => {
             <div className="card-body">
                 <h4 className="card-title">Update Profile</h4>
                 {isSuccess && <div className="alert alert-success">Profile updated successfully</div>}
-                {isError && <div className="alert alert-danger">{error?.response?.data}</div>}
+                {isError && <div className="alert alert-danger">{error?.response?.data?.message}</div>}
                 <form noValidate onSubmit={handleSubmit(onSubmit)}>
                     <div className="row">
                         <div className="col-12 col-md-6">

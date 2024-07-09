@@ -31,6 +31,7 @@ const RegisterPage = () => {
   const { register, handleSubmit, formState: { errors } } = useForm({ resolver: zodResolver(schema) });
 
   const onSubmit = async (data) => {
+    delete data.confirmPassword;
     await mutate(data);
   }
 

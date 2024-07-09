@@ -42,7 +42,7 @@ const authStore = (set) => ({
             }
         } catch (err) {
             set({ loading: false });
-            throw new Error(err.response.data);
+            throw new Error(err.response.data.message);
         }
     },
     logout: () => {

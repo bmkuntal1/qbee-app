@@ -20,7 +20,7 @@ const schema = zod.object({
 const ChangeUserPassword = ({ id }) => {
     const [showChangePassword, setShowChangePassword] = useState(false);
 
-    const { isPending, mutate, isError, error } = useMutation({ mutationFn: changePassword, onSuccess: () => onClose() }); // {onSuccess: m
+    const { isPending, mutate, isError, error } = useMutation({ mutationFn: changePassword, onSuccess: () => onClose() }); // message onSuccess
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm({ values: { password: "" }, resolver: zodResolver(schema)});
 
@@ -43,7 +43,7 @@ const ChangeUserPassword = ({ id }) => {
                         <button type="button" className="btn btn-danger btn-sm" onClick={() => setShowChangePassword(false)}>Cancel</button>
                     </div>
                     {errors?.password && <small className="invalid-feedback d-block">{errors?.password?.message}</small>}
-                    {isError && <small className="text-danger d-block">{error?.response?.data}</small>}
+                    {isError && <small className="text-danger d-block">{error?.response?.data?.message}</small>}
                 </form>
                 :
                 <button className="btn btn-link text-decoration-none" onClick={() => setShowChangePassword(true)}>

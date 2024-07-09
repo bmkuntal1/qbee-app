@@ -7,7 +7,7 @@ import DataTable from "../../../components/data-table/DataTable";
 import PageTitle from "../../../components/page/PageTitle";
 
 const getLogFileList = async (searchParams) => {
-    const response = await httpClient.get('/application/logs', { params: searchParams });
+    const response = await httpClient.get('/logs', { params: searchParams });
     return response.data;
 }
 
@@ -20,11 +20,12 @@ export default function LogListPage() {
     const { isPending, data } = useQuery({ queryKey: ['log-list', page, pageSize, sort, showHealth], queryFn: async () => await getLogFileList({ page, pageSize, sort, showHealth }) });
 
     const columns = [
-        { key: 'date', label: 'Date', sortable: true, render: (item) => <Link to={`/system/logs/${item?.date}`} >{item.date ? new Date(item.date).toLocaleDateString() : "--"}</Link> },
+        { key: 'date', label: 'Date', sortable: true, render: (item) => <Link to={`/system/logs/${item?.name?.slice(0, -4)}`} >{item.date ? new Date(item.date).toLocaleDateString() : "--"}</Link> },
         { key: 'name', label: 'File Name', sortable: true },
+        { key: 'size', label: 'Size', sortable: true, render: (item) => item.size ? `${item.size} KB` : '--' },
         {
             key: 'actions', label: 'Action', sortable: false, render: (item) => (
-                <Link to={`/system/logs/${item?.date}`} className="text-center">
+                <Link to={`/system/logs/${item?.name.slice(0,-4)}`} className="text-center">
                     <i className="bi bi-file-text"></i>
                 </Link>
             )
@@ -37,7 +38,7 @@ export default function LogListPage() {
                 <div className="hstack gap-2">
                     {item.health.errors > 0 ? (<span className="badge bg-danger">Errors: {item.health.errors}</span>) : null}
                     {item.health.warnings > 0 ? (<span className="badge bg-warning">Warning: {item.health.warnings}</span>) : null}
-                    {item.health.status == "Good" ? <span className="badge bg-success">Good</span> : null}
+                    {item.health.status == "good" ? <span className="badge bg-success">Good</span> : null}
                 </div>
             )
         })

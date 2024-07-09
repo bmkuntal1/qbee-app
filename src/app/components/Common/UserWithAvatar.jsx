@@ -1,4 +1,4 @@
-import { getApiFileUrl } from "../../helpers/utils"
+import { getApiFileUrl } from "../../helpers/utils";
 
 const UserWithAvatar = ({ user }) => {
     return (

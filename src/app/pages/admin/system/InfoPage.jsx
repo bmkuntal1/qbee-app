@@ -5,12 +5,12 @@ import { useQuery } from '@tanstack/react-query';
 import PageTitle from './../../../components/page/PageTitle';
 
 const useGetAppInfo = async () => {
-  const response = await httpClient.get('/application/info');
+  const response = await httpClient.get('/info');
   return response.data;
 }
 
-const SystemInfoPage = () => {
-  const { isPending, data } = useQuery({ queryKey: 'app-info', queryFn: useGetAppInfo });
+const InfoPage = () => {
+  const { isPending, data } = useQuery({ queryKey: ['app-info'], queryFn: useGetAppInfo });
 
   if (isPending) {
     return <div>Loading...</div>
@@ -25,12 +25,18 @@ const SystemInfoPage = () => {
         </PageContainer.Header>
         <PageContainer.Body className="col-lg-9">
           <dl className="row g-3">
-            <dt className="col-lg-4">Version:</dt>
+            <dt className="col-lg-4">App Name:</dt>
+            <dd className="col-lg-8">{import.meta.env.VITE_APP_NAME}</dd>
+            <dt className="col-lg-4">Web Version:</dt>
+            <dd className="col-lg-8">{import.meta.env.VITE_APP_VERSION}</dd>
+            <dt className="col-lg-4">Web Environment:</dt>
+            <dd className="col-lg-8">{import.meta.env.MODE}</dd>
+            <dt className="col-lg-4">API Name:</dt>
+            <dd className="col-lg-8">{data?.name}</dd>
+            <dt className="col-lg-4">API Version:</dt>
             <dd className="col-lg-8">{data?.version}</dd>
             <dt className="col-lg-4">API Environment:</dt>
-            <dd className="col-lg-8">{data?.apiEnvironment}</dd>
-            <dt className="col-lg-4">Web Environment:</dt>
-            <dd className="col-lg-8">{data?.webEnvironment}</dd>
+            <dd className="col-lg-8">{data?.environment}</dd>
           </dl>
         </PageContainer.Body>
       </PageContainer>
@@ -39,4 +45,4 @@ const SystemInfoPage = () => {
 
 }
 
-export default SystemInfoPage
+export default InfoPage

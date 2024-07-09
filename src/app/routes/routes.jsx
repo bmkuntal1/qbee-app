@@ -18,7 +18,7 @@ import UserSettingsPage from '../pages/common/profile/UserSettingsPage';
 import UserList from '../pages/admin/users/UserList';
 import UserDetailLayout from '../pages/admin/users/UserDetailLayout';
 import UserDetailPage from '../pages/admin/users/UserDetailPage';
-import SystemInfoPage from '../pages/admin/system/SystemInfoPage';
+import InfoPage from '../pages/admin/system/InfoPage';
 import LogListPage from '../pages/admin/system/LogListPage';
 import LogContentPage from './../pages/admin/system/LogContentPage';
 import LeadListPage from '../pages/crm/lead/LeadListPage';
@@ -49,7 +49,7 @@ const routes = [
                     { path: "settings", element: <h1>User Settings</h1> },
                     { path: "activities", element: <h1>User Activites</h1> }]
             },
-            { path: "system/info", element: <SystemInfoPage /> },
+            { path: "system/info", element: <InfoPage /> },
             { path: "system/logs", element: <LogListPage /> },
             { path: "system/logs/:date", element: <LogContentPage /> },
             //CRM

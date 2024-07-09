@@ -13,20 +13,21 @@ const savePassword = async (data) => {
 }
 
 const schema = zod.object({
-    currentPassword: zod.string().nonempty({ message: "Current password is required" }),
-    newPassword: zod.string().nonempty({ message: "New password is required" }),
-    confirmPassword: zod.string().nonempty({ message: "Confirm password is required" })
+    currentPassword: zod.string().min(1, { message: "Current password is required" }),
+    newPassword: zod.string().min(1, { message: "New password is required" }),
+    confirmPassword: zod.string().min(1, { message: "Confirm password is required" })
 }).refine((data) => data.currentPassword !== data.newPassword, { path: ["newPassword"], message: "New password can not be same" })
-    .refine((data) => data.confirmPassword === data.newPassword, { message: "Password does not match" , path: ["confirmPassword"]})
+    .refine((data) => data.confirmPassword === data.newPassword, { message: "Password does not match", path: ["confirmPassword"] })
 
 
 const ChangePasswordPage = () => {
     const navigate = useNavigate();
-    const { isLoading, isSuccess, isError, error, mutate } = useMutation({ mutationFn: savePassword, onSuccess: () => setTimeout(() => navigate("/profile"), 3000)})
+    const { isLoading, isSuccess, isError, error, mutate } = useMutation({ mutationFn: savePassword, onSuccess: () => setTimeout(() => navigate("/profile"), 3000) })
 
     const { register, handleSubmit, formState: { errors } } = useForm({ resolver: zodResolver(schema) });
 
     const onSubmit = async (data) => {
+        delete data.confirmPassword;
         await mutate(data);
     }
 
@@ -35,7 +36,7 @@ const ChangePasswordPage = () => {
             <div className="card-body">
                 <h4 className="card-title">Change Password</h4>
                 {isSuccess && <div className="alert alert-success">Password updated successfully</div>}
-                {isError && <div className="alert alert-danger">{error?.response?.data}</div>}
+                {isError && <div className="alert alert-danger">{error?.response?.data?.message}</div>}
                 <form noValidate onSubmit={handleSubmit(onSubmit)}>
                     <div className="row align-item-center mt-4">
                         <div className="col-12 col-md-6 offset-md-3">
